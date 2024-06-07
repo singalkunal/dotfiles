@@ -1,0 +1,9 @@
+gcc
+git
+llvm
+neovim
+node
+ripgrep
+smartmontools
+vim
+zplug
