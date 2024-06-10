@@ -1,3 +1,4 @@
+-- local comment_utils = require("singalkunal.utils.comment")
 local keymap = vim.keymap
 local default_opts = { noremap = true, silent = true }
 
@@ -24,6 +25,20 @@ keymap_set_default({"v", "x"}, "K", ":m '<-2<CR>gv=gv") -- move current selected
 
 keymap_set_default({ "n", "x" }, "<leader>p", [["0p]], { desc = "paste from yank register" })
 
+keymap_set_default({"v", "x"}, "(", "<Esc>`>a)<Esc>`<i(<Esc>")
+keymap_set_default({"v", "x"}, "'", "<Esc>`>a'<Esc>`<i'<Esc>")
+keymap_set_default({"v", "x"}, '"', "<Esc>`>a\"<Esc>`<i\"<Esc>")
+keymap_set_default({"v", "x"}, "[", "<Esc>`>a]<Esc>`<i[<Esc>")
+
+
+keymap_set_default("i", "<C-a>", "<Esc>ggVG<CR>") -- select all [INSERT]
+
+-- TO-DO: fix toggle_comment fn
+--[=[ 
+keymap.set("v", "cc", function()
+    comment_utils.toggle_comment()
+end, {expr = true})
+--]=]
 
 -- Resizing panes
 keymap_set_default("n", "<Left>", ":vertical resize +1<CR>")

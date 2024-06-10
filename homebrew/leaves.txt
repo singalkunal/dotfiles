@@ -1,3 +1,5 @@
+bat
+fzf
 gcc
 git
 llvm
@@ -5,5 +7,8 @@ neovim
 node
 ripgrep
 smartmontools
+stow
+the_silver_searcher
+universal-ctags
 vim
 zplug

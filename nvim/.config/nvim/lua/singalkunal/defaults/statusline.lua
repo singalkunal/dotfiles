@@ -40,46 +40,6 @@ local function apply_hl()
   default_hl(mode_higroups['COMMAND'], 'Comment')
 end
 
--- mode_map copied from:
--- https://github.com/nvim-lualine/lualine.nvim/blob/5113cdb32f9d9588a2b56de6d1df6e33b06a554a/lua/lualine/utils/mode.lua
-local mode_map = {
-  ['n']      = 'NORMAL',
-  ['no']     = 'O-PENDING',
-  ['nov']    = 'O-PENDING',
-  ['noV']    = 'O-PENDING',
-  ['no\22']  = 'O-PENDING',
-  ['niI']    = 'NORMAL',
-  ['niR']    = 'NORMAL',
-  ['niV']    = 'NORMAL',
-  ['nt']     = 'NORMAL',
-  ['v']      = 'VISUAL',
-  ['vs']     = 'VISUAL',
-  ['V']      = 'V-LINE',
-  ['Vs']     = 'V-LINE',
-  ['\22']    = 'V-BLOCK',
-  ['\22s']   = 'V-BLOCK',
-  ['s']      = 'SELECT',
-  ['S']      = 'S-LINE',
-  ['\19']    = 'S-BLOCK',
-  ['i']      = 'INSERT',
-  ['ic']     = 'INSERT',
-  ['ix']     = 'INSERT',
-  ['R']      = 'REPLACE',
-  ['Rc']     = 'REPLACE',
-  ['Rx']     = 'REPLACE',
-  ['Rv']     = 'V-REPLACE',
-  ['Rvc']    = 'V-REPLACE',
-  ['Rvx']    = 'V-REPLACE',
-  ['c']      = 'COMMAND',
-  ['cv']     = 'EX',
-  ['ce']     = 'EX',
-  ['r']      = 'REPLACE',
-  ['rm']     = 'MORE',
-  ['r?']     = 'CONFIRM',
-  ['!']      = 'SHELL',
-  ['t']      = 'TERMINAL',
-}
-
 local fmt = string.format
 local hi_pattern = '%%#%s#%s%%*'
 
