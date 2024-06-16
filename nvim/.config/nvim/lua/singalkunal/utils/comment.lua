@@ -9,7 +9,6 @@ local comment_map = {
     ["go"] = "//",
     ["java"] = "//",
     ["javascript"] = "//",
-    ["lua"] = "--",
     ["scala"] = "//",
     ["php"] = "//",
     ["python"] = "#",
@@ -32,7 +31,6 @@ local comment_map = {
 }
 
 M.toggle_comment = function()
-    print("heyyyyyyy")
     if comment_map[bo.filetype] ~= nil then
         local comment_leader = comment_map[bo.filetype]
         local line = api.nvim_get_current_line()

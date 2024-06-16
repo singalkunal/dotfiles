@@ -1,11 +1,7 @@
 local api = vim.api
-print(...)
 local g = vim.g
 local opt = vim.opt
 local env = vim.env
-
--- remap env variables (specific to vim)
-env.XDG_DATA_HOME = env.HOME .. "/.config/local/share"
 
 -- Remap leader and local leader to <Space>
 api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })

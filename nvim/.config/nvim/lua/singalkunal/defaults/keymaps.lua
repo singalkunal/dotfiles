@@ -29,6 +29,7 @@ keymap_set_default({"v", "x"}, "(", "<Esc>`>a)<Esc>`<i(<Esc>")
 keymap_set_default({"v", "x"}, "'", "<Esc>`>a'<Esc>`<i'<Esc>")
 keymap_set_default({"v", "x"}, '"', "<Esc>`>a\"<Esc>`<i\"<Esc>")
 keymap_set_default({"v", "x"}, "[", "<Esc>`>a]<Esc>`<i[<Esc>")
+keymap_set_default({"v", "x"}, "{", "<Esc>`>a}<Esc>`<i{<Esc>")
 
 
 keymap_set_default("i", "<C-a>", "<Esc>ggVG<CR>") -- select all [INSERT]
@@ -53,6 +54,8 @@ keymap_set_default("n", "<C-j>", ":wincmd j<CR>")
 keymap_set_default("n", "<C-k>", ":wincmd k<CR>")
 keymap_set_default("n", "<C-l>", ":wincmd l<CR>", { buffer = true})
 
+keymap_set_default("n", "<leader>o", "o<Esc>")
+keymap_set_default("n", "<leader>O", "O<Esc>")
 
 -- Hack to clear existing netrw buffer's C-l key mapping
 -- and replacing it for split pane navigation
