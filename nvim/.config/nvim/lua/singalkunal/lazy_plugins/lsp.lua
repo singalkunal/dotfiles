@@ -1,5 +1,6 @@
 return {
     'neovim/nvim-lspconfig',
+    -- dependencies are lazy loaded
     dependencies = {
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
@@ -14,6 +15,7 @@ return {
     },
     config = function()
         local cmp = require('cmp')
+        print("lsp config")
         local cmp_lsp = require("cmp_nvim_lsp")
         local capabilities = vim.tbl_deep_extend(
             "force",
@@ -22,15 +24,37 @@ return {
             cmp_lsp.default_capabilities())
         -- print(dump_me_vaguely(capabilities))
 
+        local on_attach = function(client, bufnr)
+            vim.g.completion_matching_strategy_list = "['exact', 'substring', 'fuzzy']"
+
+            local function buf_set_keymap(...)
+                vim.api.nvim_buf_set_keymap(bufnr, ...)
+            end
+            -- Mappings.
+            local opts = { noremap = true, silent = true }
+            buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+            buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+            buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+            buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+            buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+            buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+            buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+            buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+            buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+            buf_set_keymap('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+            buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+            buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+        end
+
         -- 1. Setup lanuage servers
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = { "clangd", "lua_ls", "pyright" },
             handlers = {
                 function(server_name) -- default handler (optional)
-
                     require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
+                        capabilities = capabilities,
+                        on_attach = on_attach
                     }
                 end,
 
@@ -38,6 +62,7 @@ return {
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
                         capabilities = capabilities,
+                        on_attach = on_attach,
                         settings = {
                             Lua = {
                                 runtime = { version = "Lua 5.1" },
@@ -51,7 +76,7 @@ return {
             }
         })
 
-        -- 2. Setup Completion - provides lang specific code completion over 
+        -- 2. Setup Completion - provides lang specific code completion over
         -- omnicompletion provided by default vim
         cmp.setup({
             snippet = {
@@ -86,7 +111,7 @@ return {
                 }),
             formatting = {
                 -- changing the order of fields so the icon is the first
-                fields = {'menu', 'abbr', 'kind'},
+                fields = { 'menu', 'abbr', 'kind' },
                 -- here is where the change happens
                 format = function(entry, vim_item)
                     local menu_icon = {
@@ -114,7 +139,7 @@ return {
                         Value = '',
                         Enum = '',
                         Keyword = '',
-                        Snippet = '',
+                        Snippet = '',
                         Color = '',
                         File = '',
                         Reference = '',
@@ -143,6 +168,7 @@ return {
         })
 
         -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+        --[==[
         cmp.setup.cmdline({ '/', '?' }, {
             mapping = cmp.mapping.preset.cmdline(),
             sources = {
@@ -161,12 +187,16 @@ return {
                 }),
             matching = { disallow_symbol_nonprefix_matching = false }
         })
-        ]==]--
+        ]==] --
 
 
         -- 2.2 Diagonastics
         vim.diagnostic.config({
             -- update_in_insert = true,
+            -- disable virtual text by default
+            -- will be visible via vim.diagnostic.open_float()
+            virtual_text = false,
+            everity_sort = true,
             float = {
                 focusable = false,
                 style = "minimal",
