@@ -120,5 +120,42 @@ _G.set_sign_icons = function(opts)
   sign({name = 'info', hl = 'DiagnosticSignInfo'})
 end
 
+_G.open_quickfix_float = function()
+    local qf_list = vim.fn.getqflist()
+    if #qf_list == 0 then
+        return
+    end
+
+    local width = math.floor(vim.o.columns * 0.8)
+    local height = math.floor(vim.o.lines * 0.8)
+    local row = math.floor((vim.o.lines - height) / 2)
+    local col = math.floor((vim.o.columns - width) / 2)
+
+    local win_id = vim.api.nvim_open_win(0, true, {
+        relative = 'editor',
+        row = row,
+        col = col,
+        width = width,
+        height = height,
+        style = 'minimal',
+        border = 'rounded',
+    })
+
+    vim.api.nvim_win_set_option(win_id, 'winhl', 'Normal:NormalFloat')
+    vim.api.nvim_win_set_option(win_id, 'winhighlight', 'NormalFloat:NormalFloat,FloatBorder:FloatBorder')
+
+    vim.api.nvim_win_set_option(win_id, 'number', false)
+    vim.api.nvim_win_set_option(win_id, 'relativenumber', false)
+    vim.api.nvim_win_set_option(win_id, 'cursorline', false)
+    vim.api.nvim_win_set_option(win_id, 'cursorcolumn', false)
+
+    vim.api.nvim_buf_set_option(0, 'filetype', 'qf')
+    vim.api.nvim_buf_set_option(0, 'modifiable', false)
+    vim.api.nvim_buf_set_option(0, 'buflisted', false)
+    vim.api.nvim_buf_set_option(0, 'bufhidden', 'wipe')
+
+    vim.api.nvim_win_set_buf(win_id, 0)
+end
+
 ------ Global properties -------
 _G.isLoaded = true -- to check if global is loaded
